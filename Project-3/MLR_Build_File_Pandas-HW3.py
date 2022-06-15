@@ -101,13 +101,13 @@ print('O3+NO2+NO+SO2',new_PR_data_inner.shape)
 ##### PRINT the HEADERS in the PANDAS data frame
 print('headers of the pandas object new_PR_data_inner :\n',new_PR_data_inner.columns)
 
+new_PR_data_inner["Sensor_O3"] = new_PR_data_inner["Sensor_O3"].str.replace(".","", regex = True)
+
 norm_dat = new_PR_data_inner.drop(["date"], axis=1)
-norm_dat["Sensor_O3"] = norm_dat["Sensor_O3"].str.replace(".","", regex = True)
 norm_dat["Sensor_O3"] = pd.to_numeric(norm_dat["Sensor_O3"])
 norm_dat = (norm_dat - norm_dat.mean()) / norm_dat.std()
 norm_dat.insert(0, "date", new_PR_data_inner["date"])
 
 
-
 new_PR_data_inner.to_csv("all_data.csv", index=False)
-Normalised_data = norm_dat.to_csv("norm_all_data.csv", index = False)
+norm_dat.to_csv("norm_all_data.csv", index = False)
