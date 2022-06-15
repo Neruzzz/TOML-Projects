@@ -15,7 +15,7 @@ lr = LinearRegression()
 sfs_rmse = sfs(lr, k_features=5, forward=True, verbose=2, scoring="neg_root_mean_squared_error")
 sfs_rmse = sfs_rmse.fit(X,Y)
 features_rmse = list(sfs_rmse.k_feature_names_)
-scores_rmse = sfs_rmse.k_score_
-print(features_rmse)
-print(scores_rmse)
+#print(features_rmse)
+print(sfs_rmse.subsets_[1]['cv_scores'])
+
 
