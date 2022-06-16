@@ -18,12 +18,12 @@ def table_creation(headers, data, file):
 Dataframe = pd.read_csv("norm_all_data.csv")
 Dataframe["date"] = pd.to_datetime(Dataframe["date"])
 
-xTrain, xTest, yTrain, yTest = train_test_split(Dataframe.drop(["RefSt", "date", "Sensor_NO2", "Sensor_NO", "Sensor_SO2"], axis = 1), Dataframe["RefSt"], test_size = 0.3)
+xTrain, xTest, yTrain, yTest = train_test_split(Dataframe.drop(["RefSt", "date"], axis = 1), Dataframe["RefSt"], test_size = 0.3) # , "Sensor_NO2", "Sensor_NO", "Sensor_SO2"
 
 ######################## RIDGE REGRESSION #######################################
 rr = linear_model.Ridge()
 
-alphas_rr = np.linspace(1, 1000, num = 10, dtype = int)
+alphas_rr = np.linspace(0, 1000, num = 10, dtype = float)
 coefficients_rr = []
 R2_rr = []
 RMSE_rr = []
@@ -36,7 +36,7 @@ for a in alphas_rr:
     coefficients_rr.append(rr.coef_)
     prediction_rr = rr.predict(xTest)
 
-    print("METRICS FOR ALPHA = " + str(a))
+    print("RIDGE REGRESSION METRICS FOR ALPHA = " + str(a))
     print("R²: " + str(metrics.r2_score(yTest, prediction_rr)))
     R2_rr.append(metrics.r2_score(yTest, prediction_rr))
     print("RMSE: " + str(metrics.mean_squared_error(yTest, prediction_rr, squared = False)))
@@ -51,13 +51,13 @@ ax = plt.gca()
 ax.plot(alphas_rr, coefficients_rr)
 plt.axis('tight')
 plt.legend(("Sensor_O3 coefficient", "Temp coefficient", "RelHum coefficient"))
-plt.title("Coefficient values vs alpha values")
+plt.title("Ridge Regression. Coefficient values vs alpha values")
 plt.xlabel('Alpha value')
 plt.ylabel('Coefficient value')
 plt.show()
 
 
-plt.title("Metrics vs alpha value")
+plt.title("Ridge Regression. Metrics vs alpha value")
 plt.xlabel('Alpha value')
 plt.ylabel('Metric value')
 plt.plot(alphas_rr, R2_rr, color='red', label = "R²")
@@ -69,7 +69,7 @@ plt.show()
 ######################## LASSO REGRESSION #######################################
 lasso = linear_model.Lasso()
 
-alphas_lasso = np.linspace(0, 1000, num = 10, dtype = float)
+alphas_lasso = np.linspace(0, 1, num = 10, dtype = float)
 coefficients_lasso = []
 R2_lasso = []
 RMSE_lasso = []
@@ -79,10 +79,10 @@ print()
 for a in alphas_lasso:
     lasso.set_params(alpha = a)
     lasso.fit(xTrain, yTrain)
-    coefficients_lasso.append(rr.coef_)
+    coefficients_lasso.append(lasso.coef_)
     prediction_lasso = lasso.predict(xTest)
 
-    print("METRICS FOR ALPHA = " + str(a))
+    print("LASSO REGRESSION METRICS FOR ALPHA = " + str(a))
     print("R²: " + str(metrics.r2_score(yTest, prediction_lasso)))
     R2_lasso.append(metrics.r2_score(yTest, prediction_lasso))
     print("RMSE: " + str(metrics.mean_squared_error(yTest, prediction_lasso, squared = False)))
@@ -97,17 +97,30 @@ ax = plt.gca()
 ax.plot(alphas_lasso, coefficients_lasso)
 plt.axis('tight')
 plt.legend(("Sensor_O3 coefficient", "Temp coefficient", "RelHum coefficient"))
-plt.title("Coefficient values vs alpha values")
+plt.title("Lasso Regression. Coefficient values vs alpha values Lasso Regression")
 plt.xlabel('Alpha value')
 plt.ylabel('Coefficient value')
+plt.show()
+
+
+plt.title("Lasso Regression. Metrics vs alpha value.")
+plt.xlabel('Alpha value')
+plt.ylabel('Metric value')
+plt.plot(alphas_lasso, R2_lasso, color='red', label = "R²")
+plt.plot(alphas_lasso, RMSE_lasso, color='blue', label = "RMSE")
+plt.plot(alphas_lasso, MAE_lasso, color='green', label = "MAE")
+plt.legend(loc = "center left")
 plt.show()
 
 
 plt.title("Metrics vs alpha value")
 plt.xlabel('Alpha value')
 plt.ylabel('Metric value')
-plt.plot(alphas_lasso, R2_lasso, color='red', label = "R²")
-plt.plot(alphas_lasso, RMSE_lasso, color='blue', label = "RMSE")
-plt.plot(alphas_lasso, MAE_lasso, color='green', label = "MAE")
+plt.plot(R2_rr, color='red', label = "R² Ridge regression")
+plt.plot(RMSE_rr, color='blue', label = "RMSE Ridge Regression")
+plt.plot(MAE_rr, color='green', label = "MAE Ridge Regression")
+plt.plot(R2_lasso, color='red', label = "R² Lasso")
+plt.plot(RMSE_lasso, color='blue', label = "RMSE Lasso")
+plt.plot(MAE_lasso, color='green', label = "MAE Lasso")
 plt.legend(loc = "center left")
 plt.show()
