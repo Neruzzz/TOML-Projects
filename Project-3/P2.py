@@ -18,11 +18,11 @@ def table_creation(headers, data, file):
 Dataframe = pd.read_csv("norm_all_data.csv")
 Dataframe["date"] = pd.to_datetime(Dataframe["date"])
 
-xTrain, xTest, yTrain, yTest = train_test_split(Dataframe.drop(["RefSt", "date"], axis = 1), Dataframe["RefSt"], test_size = 0.3)
+xTrain, xTest, yTrain, yTest = train_test_split(Dataframe.drop(["RefSt", "date", "Sensor_NO2", "Sensor_NO", "Sensor_SO2"], axis = 1), Dataframe["RefSt"], test_size = 0.3)
 
 rr = linear_model.Ridge()
 
-alphas = np.linspace(1, 1000, num = 500, dtype = int)
+alphas = np.linspace(1, 1000, num = 10, dtype = int)
 coefficients = []
 R2 = []
 RMSE = []
@@ -48,8 +48,8 @@ table_creation(['Alpha', 'R²', 'RMSE', 'MAE'], [alphas, R2, RMSE, MAE], 'P2_rr_
 
 ax = plt.gca()
 ax.plot(alphas, coefficients)
-ax.set_xscale('log')
 plt.axis('tight')
+plt.legend(("Sensor_O3 coefficient", "Temp coefficient", "RelHum coefficient"))
 plt.title("Coefficient values vs alpha values")
 plt.xlabel('Alpha value')
 plt.ylabel('Coefficient value')
