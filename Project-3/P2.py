@@ -20,6 +20,7 @@ Dataframe["date"] = pd.to_datetime(Dataframe["date"])
 
 xTrain, xTest, yTrain, yTest = train_test_split(Dataframe.drop(["RefSt", "date"], axis = 1), Dataframe["RefSt"], test_size = 0.3) # , "Sensor_NO2", "Sensor_NO", "Sensor_SO2"
 
+
 ######################## RIDGE REGRESSION #######################################
 rr = linear_model.Ridge()
 
@@ -82,6 +83,7 @@ for a in alphas_lasso:
     coefficients_lasso.append(lasso.coef_)
     prediction_lasso = lasso.predict(xTest)
 
+
     print("LASSO REGRESSION METRICS FOR ALPHA = " + str(a))
     print("R²: " + str(metrics.r2_score(yTest, prediction_lasso)))
     R2_lasso.append(metrics.r2_score(yTest, prediction_lasso))
@@ -113,7 +115,7 @@ plt.legend(loc = "center left")
 plt.show()
 
 
-plt.title("Metrics vs alpha value")
+'''plt.title("Metrics vs alpha value")
 plt.xlabel('Alpha value')
 plt.ylabel('Metric value')
 plt.plot(R2_rr, color='red', label = "R² Ridge regression")
@@ -123,4 +125,5 @@ plt.plot(R2_lasso, color='red', label = "R² Lasso")
 plt.plot(RMSE_lasso, color='blue', label = "RMSE Lasso")
 plt.plot(MAE_lasso, color='green', label = "MAE Lasso")
 plt.legend(loc = "center left")
-plt.show()
+plt.show()'''
+

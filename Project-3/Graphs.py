@@ -49,6 +49,7 @@ plt.title("Scatter plot Sensor_O3 vs Sensor_NO")
 plt.ylabel("Ozone in KOhms")
 plt.xlabel("Sensor_NO")
 plt.show()
+
 Dataframe.plot(x = "Sensor_SO2", y = "Sensor_O3", kind = "scatter", color="r")
 plt.title("Scatter plot Sensor_O3 vs Sensor_SO2")
 plt.ylabel("Ozone in KOhms")
