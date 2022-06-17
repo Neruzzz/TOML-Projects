@@ -30,7 +30,7 @@ Predictions['date'] = Dataframe['date']
 ######################## RIDGE REGRESSION #######################################
 rr = linear_model.Ridge()
 
-alphas_rr = np.linspace(0, 1000, num = 10, dtype = float)
+alphas_rr = np.linspace(0, 1000, num = 10, dtype = int)
 coefficients_rr = []
 R2_rr = []
 RMSE_rr = []
