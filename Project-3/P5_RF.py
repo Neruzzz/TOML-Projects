@@ -1,40 +1,39 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 from sklearn import metrics
-from sklearn.preprocessing import StandardScaler
 from tabulate import tabulate
+import seaborn as sns
 
 def table_creation(headers, data, file):
     table = {}
     for i, h in enumerate(headers):
         table.update({h: data[i]})
-    with open("./"+file, 'w', encoding="utf-8") as file:
+    with open("./MetricTables/"+file, 'w', encoding="utf-8") as file:
         file.write(tabulate(table, headers='keys', tablefmt='fancy_grid'))
         file.close()
     return True
 
-Dataframe = pd.read_csv("norm_all_data.csv")
+dir_path = "/Users/Imanol/OneDrive/Escritorio/Master/Q2/TOML/TOML-Projects/Project-3/Data/"
+Dataframe = pd.read_csv(dir_path + "norm_all_data.csv")
 Dataframe["date"] = pd.to_datetime(Dataframe["date"])
 
-xTrain, xTest, yTrain, yTest = train_test_split(Dataframe.drop(["RefSt", "date"], axis = 1), Dataframe["RefSt"], test_size = 0.3) # , "Sensor_NO2", "Sensor_NO", "Sensor_SO2"
+X = Dataframe.drop(["RefSt", "date"], axis = 1)
+Y = Dataframe["RefSt"]
+
+
+xTrain, xTest, yTrain, yTest = train_test_split(X, Y, test_size = 0.3)
 
 Predictions = pd.DataFrame()
 Predictions['RefSt'] = yTest
 Predictions['Sensor_O3'] = xTest['Sensor_O3']
 Predictions['date'] = Dataframe['date']
 
-SS = StandardScaler()
-rf = RandomForestClassifier()
+rf = RandomForestRegressor()
 
-xTrain = SS.fit_transform(xTrain)
-xTest = SS.fit_transform(xTest)
-yTrain = SS.fit_transform(yTrain)
-yTest = SS.fit_transform(yTest)
-
-estimators_rf = np.linspace(0, 1000, num = 10, dtype = int)
+estimators_rf = np.linspace(1, 20, num = 5, dtype = int)
 coefficients_rf = []
 
 R2_rf = []
@@ -46,9 +45,10 @@ for n in estimators_rf:
     rf.set_params(n_estimators = n)
     rf.fit(xTrain, yTrain)
     prediction_rf = rf.predict(xTest)
-    coefficients_rf.append(rf.coef_)
-    Predictions['RF_Prediction'] = rf.intercept_ + rf.coef_[0] * xTest['Sensor_O3'] + rf.coef_[1] * xTest['Temp'] + rf.coef_[2] * xTest['RelHum'] + rf.coef_[3] * xTest['Sensor_NO2'] + rf.coef_[4] * xTest['Sensor_NO'] + rf.coef_[5] * xTest['Sensor_SO2']
 
+    Predictions['RF_Prediction'] = prediction_rf
+
+    print(n, prediction_rf)
     print("RANDOM FOREST WITH " + str(n) + " TREES")
     print("R²: " + str(metrics.r2_score(yTest, prediction_rf)))
     R2_rf.append(metrics.r2_score(yTest, prediction_rf))
@@ -59,23 +59,19 @@ for n in estimators_rf:
     print()
 
     ax1 = Predictions.plot(x='date', y='RefSt')
-    Predictions.plot(x='date', y='RF_Prediction', ax=ax1, title='Random Forest for = ' + str(n) + " trees")
+    Predictions.plot(x='date', y='RF_Prediction', ax=ax1, title='Random Forest for ' + str(n) + ' trees.')
     plt.show()
-    sns_rf = sns.lmplot(x='RefSt', y='RF_Prediction', data=Predictions, fit_reg=True, line_kws={'color': 'orange'}).set(title='Random Forest for alpha = ' + str(a))
+
+    sns_rf = sns.lmplot(x='RefSt', y='RF_Prediction', data=Predictions, fit_reg=True, line_kws={'color': 'orange'}).set(title='Random Forest for ' + str(n) + ' trees.')
     sns_rf.set(ylim=(-2, 3))
     sns_rf.set(xlim=(-2, 3))
     plt.show()
 
+
 table_creation(['Number of trees', 'R²', 'RMSE', 'MAE'], [estimators_rf, R2_rf, RMSE_rf, MAE_rf], 'P5_rf_table.txt')
 
-ax2 = plt.gca()
-ax2.plot(estimators_rf, coefficients_rf)
-plt.axis('tight')
-plt.legend(("Sensor_O3 coefficient", "Temp coefficient", "RelHum coefficient", "Sensor NO2", "Sensor NO", "Sensor SO2"))
-plt.title("Random Forest. Coefficient values vs number of estimators")
-plt.xlabel('Number of trees')
-plt.ylabel('Coefficient value')
-plt.show()
+
+
 
 
 plt.title("Random Forest. Metrics vs  number of estimators (trees)")

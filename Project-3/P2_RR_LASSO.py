@@ -12,12 +12,12 @@ def table_creation(headers, data, file):
     table = {}
     for i, h in enumerate(headers):
         table.update({h: data[i]})
-    with open("./"+file, 'w', encoding="utf-8") as file:
+    with open("./MetricTables/" + file, 'w', encoding="utf-8") as file:
         file.write(tabulate(table, headers='keys', tablefmt='fancy_grid'))
         file.close()
     return True
-
-Dataframe = pd.read_csv("norm_all_data.csv")
+dir_path = "/Users/Imanol/OneDrive/Escritorio/Master/Q2/TOML/TOML-Projects/Project-3/Data/"
+Dataframe = pd.read_csv(dir_path + "norm_all_data.csv")
 Dataframe["date"] = pd.to_datetime(Dataframe["date"])
 
 xTrain, xTest, yTrain, yTest = train_test_split(Dataframe.drop(["RefSt", "date"], axis = 1), Dataframe["RefSt"], test_size = 0.3) # , "Sensor_NO2", "Sensor_NO", "Sensor_SO2"

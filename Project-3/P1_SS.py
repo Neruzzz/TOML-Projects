@@ -4,7 +4,8 @@ from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
 
 
-Dataframe = pd.read_csv("norm_all_data.csv")
+dir_path = "/Users/Imanol/OneDrive/Escritorio/Master/Q2/TOML/TOML-Projects/Project-3/Data/"
+Dataframe = pd.read_csv(dir_path + "norm_all_data.csv")
 Dataframe["date"] = pd.to_datetime(Dataframe["date"])
 
 

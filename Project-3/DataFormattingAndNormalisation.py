@@ -15,7 +15,7 @@ import pandas as pd
 ########### INDICATE THE PATH IN WHICH YOU HAVE THE DATA FILE datos_TOML-17001.csv
 
 ###### SUBSTITUTE THE PATH HERE BY YOUR OWN PATH WHERE YOU HAVE COPIED THE DATA FILES
-dir_path = "/Users/Imanol/OneDrive/Escritorio/Master/Q2/TOML/Projects-TOML/Project-3/"
+dir_path = "/Users/Imanol/OneDrive/Escritorio/Master/Q2/TOML/TOML-Projects/Project-3/Data/"
 
 ###### DATA FILES TO BE LOADED
 data_NO2 = dir_path + "NO2_Manlleu.csv"
@@ -109,5 +109,5 @@ norm_dat = (norm_dat - norm_dat.mean()) / norm_dat.std()
 norm_dat.insert(0, "date", new_PR_data_inner["date"])
 
 
-new_PR_data_inner.to_csv("all_data.csv", index=False)
-norm_dat.to_csv("norm_all_data.csv", index = False)
+new_PR_data_inner.to_csv(dir_path + "all_data.csv", index=False)
+norm_dat.to_csv(dir_path + "norm_all_data.csv", index = False)
