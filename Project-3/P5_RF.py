@@ -23,7 +23,6 @@ Dataframe["date"] = pd.to_datetime(Dataframe["date"])
 X = Dataframe.drop(["RefSt", "date"], axis = 1)
 Y = Dataframe["RefSt"]
 
-
 xTrain, xTest, yTrain, yTest = train_test_split(X, Y, test_size = 0.3)
 
 Predictions = pd.DataFrame()
@@ -69,9 +68,6 @@ for n in estimators_rf:
 
 
 table_creation(['Number of trees', 'R²', 'RMSE', 'MAE'], [estimators_rf, R2_rf, RMSE_rf, MAE_rf], 'P5_rf_table.txt')
-
-
-
 
 
 plt.title("Random Forest. Metrics vs  number of estimators (trees)")
