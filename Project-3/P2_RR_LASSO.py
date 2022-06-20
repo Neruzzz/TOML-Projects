@@ -53,9 +53,9 @@ for a in alphas_rr:
     MAE_rr.append(metrics.mean_absolute_error(yTest, prediction_rr))
     print()
 
-    ax1 = Predictions.plot(x='date', y='RefSt')
+    '''ax1 = Predictions.plot(x='date', y='RefSt')
     Predictions.plot(x='date', y='RR_Prediction', ax=ax1, title='Ridge Regression for alpha = ' + str(a))
-    plt.show()
+    plt.show()'''
     '''sns_rr = sns.lmplot(x='RefSt', y='RR_Prediction', data=Predictions, fit_reg=True, line_kws={'color': 'orange'}).set(title='Ridge Regression for alpha = ' + str(a))
     sns_rr.set(ylim=(-2, 3))
     sns_rr.set(xlim=(-2, 3))
@@ -109,10 +109,10 @@ for a in alphas_lasso:
     MAE_lasso.append(metrics.mean_absolute_error(yTest, prediction_lasso))
     print()
 
-    '''ax3 = Predictions.plot(x='date', y='RefSt')
+    ax3 = Predictions.plot(x='date', y='RefSt')
     Predictions.plot(x='date', y='LASSO_Prediction', ax=ax3, title='Lasso Regression for alpha = ' + str(a))
     plt.show()
-    sns_lasso = sns.lmplot(x='RefSt', y='LASSO_Prediction', data=Predictions, fit_reg=True, line_kws={'color': 'orange'}).set(title='Lasso Regression for alpha = ' + str(a))
+    '''sns_lasso = sns.lmplot(x='RefSt', y='LASSO_Prediction', data=Predictions, fit_reg=True, line_kws={'color': 'orange'}).set(title='Lasso Regression for alpha = ' + str(a))
     sns_lasso.set(ylim=(-2, 3))
     sns_lasso.set(xlim=(-2, 3))
     plt.show()'''
