@@ -53,10 +53,10 @@ for a in alphas_rr:
     MAE_rr.append(metrics.mean_absolute_error(yTest, prediction_rr))
     print()
 
-    '''ax1 = Predictions.plot(x='date', y='RefSt')
+    ax1 = Predictions.plot(x='date', y='RefSt')
     Predictions.plot(x='date', y='RR_Prediction', ax=ax1, title='Ridge Regression for alpha = ' + str(a))
     plt.show()
-    sns_rr = sns.lmplot(x='RefSt', y='RR_Prediction', data=Predictions, fit_reg=True, line_kws={'color': 'orange'}).set(title='Ridge Regression for alpha = ' + str(a))
+    '''sns_rr = sns.lmplot(x='RefSt', y='RR_Prediction', data=Predictions, fit_reg=True, line_kws={'color': 'orange'}).set(title='Ridge Regression for alpha = ' + str(a))
     sns_rr.set(ylim=(-2, 3))
     sns_rr.set(xlim=(-2, 3))
     plt.show()'''
@@ -139,19 +139,4 @@ plt.plot(alphas_lasso, RMSE_lasso, color='blue', label = "RMSE")
 plt.plot(alphas_lasso, MAE_lasso, color='green', label = "MAE")
 plt.legend(loc = "center left")
 plt.show()
-
-
-
-
-'''plt.title("Metrics vs alpha value")
-plt.xlabel('Alpha value')
-plt.ylabel('Metric value')
-plt.plot(R2_rr, color='red', label = "R² Ridge regression")
-plt.plot(RMSE_rr, color='blue', label = "RMSE Ridge Regression")
-plt.plot(MAE_rr, color='green', label = "MAE Ridge Regression")
-plt.plot(R2_lasso, color='red', label = "R² Lasso")
-plt.plot(RMSE_lasso, color='blue', label = "RMSE Lasso")
-plt.plot(MAE_lasso, color='green', label = "MAE Lasso")
-plt.legend(loc = "center left")
-plt.show()'''
 

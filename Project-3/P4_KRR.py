@@ -34,7 +34,7 @@ Predictions['date'] = Dataframe['date']
 
 ####################################### KRR POLY #####################################
 
-krr = KernelRidge(kernel='poly', degree = 3) # poly with degree 3
+'''krr = KernelRidge(kernel='poly', degree = 3) # poly with degree 3
 
 alpha_krr = np.linspace(0, 1000, num = 10, dtype = float)
 coefficients_krr = []
@@ -79,7 +79,7 @@ plt.plot(alpha_krr, R2_krr, color='red', label = "R²")
 plt.plot(alpha_krr, RMSE_krr, color='blue', label = "RMSE")
 plt.plot(alpha_krr, MAE_krr, color='green', label = "MAE")
 plt.legend(loc = "center left")
-plt.show()
+plt.show()'''
 
 
 
