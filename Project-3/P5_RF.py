@@ -47,7 +47,6 @@ for n in estimators_rf:
 
     Predictions['RF_Prediction'] = prediction_rf
 
-    print(n, prediction_rf)
     print("RANDOM FOREST WITH " + str(n) + " TREES")
     print("R²: " + str(metrics.r2_score(yTest, prediction_rf)))
     R2_rf.append(metrics.r2_score(yTest, prediction_rf))
