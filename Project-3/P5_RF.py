@@ -20,7 +20,7 @@ dir_path = "/Users/Imanol/OneDrive/Escritorio/Master/Q2/TOML/TOML-Projects/Proje
 Dataframe = pd.read_csv(dir_path + "norm_all_data.csv")
 Dataframe["date"] = pd.to_datetime(Dataframe["date"])
 
-X = Dataframe.drop(["RefSt", "date"], axis = 1)
+X = Dataframe.drop(["RefSt", "date", "Sensor_NO2", "Sensor_NO", "Sensor_SO2"], axis = 1)
 Y = Dataframe["RefSt"]
 
 xTrain, xTest, yTrain, yTest = train_test_split(X, Y, test_size = 0.3)
@@ -32,7 +32,7 @@ Predictions['date'] = Dataframe['date']
 
 rf = RandomForestRegressor()
 
-estimators_rf = np.linspace(1, 20, num = 5, dtype = int)
+estimators_rf = np.linspace(1, 100, num = 10, dtype = int)
 coefficients_rf = []
 
 R2_rf = []
@@ -61,10 +61,10 @@ for n in estimators_rf:
     Predictions.plot(x='date', y='RF_Prediction', ax=ax1, title='Random Forest for ' + str(n) + ' trees.')
     plt.show()
 
-    sns_rf = sns.lmplot(x='RefSt', y='RF_Prediction', data=Predictions, fit_reg=True, line_kws={'color': 'orange'}).set(title='Random Forest for ' + str(n) + ' trees.')
+    '''sns_rf = sns.lmplot(x='RefSt', y='RF_Prediction', data=Predictions, fit_reg=True, line_kws={'color': 'orange'}).set(title='Random Forest for ' + str(n) + ' trees.')
     sns_rf.set(ylim=(-2, 3))
     sns_rf.set(xlim=(-2, 3))
-    plt.show()
+    plt.show()'''
 
 
 table_creation(['Number of trees', 'R²', 'RMSE', 'MAE'], [estimators_rf, R2_rf, RMSE_rf, MAE_rf], 'P5_rf_table.txt')

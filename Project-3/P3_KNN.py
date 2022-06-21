@@ -20,7 +20,7 @@ dir_path = "/Users/Imanol/OneDrive/Escritorio/Master/Q2/TOML/TOML-Projects/Proje
 Dataframe = pd.read_csv(dir_path + "norm_all_data.csv")
 Dataframe["date"] = pd.to_datetime(Dataframe["date"])
 
-X = Dataframe.drop(["RefSt", "date"], axis = 1)
+X = Dataframe.drop(["RefSt", "date", "Sensor_NO2", "Sensor_NO", "Sensor_SO2"], axis = 1)
 Y = Dataframe["RefSt"]
 
 
@@ -33,7 +33,7 @@ Predictions['date'] = Dataframe['date']
 
 knn = KNeighborsRegressor()
 
-neighbors_knn = np.linspace(1, 20, num = 10, dtype = int)
+neighbors_knn = np.linspace(1, 15, num = 10, dtype = int)
 coefficients_knn = []
 
 R2_knn = []
@@ -57,9 +57,9 @@ for n in neighbors_knn:
     MAE_knn.append(metrics.mean_absolute_error(yTest, prediction_knn))
     print()
 
-    ax1 = Predictions.plot(x='date', y='RefSt')
+    '''ax1 = Predictions.plot(x='date', y='RefSt')
     Predictions.plot(x='date', y='KNN_Prediction', ax=ax1, title='K-Nearest Neighbors with neighbors = ' + str(n))
-    plt.show()
+    plt.show()'''
 
     '''sns_knn = sns.lmplot(x='RefSt', y='KNN_Prediction', data=Predictions, fit_reg=True, line_kws={'color': 'orange'}).set(title='K-Nearest Neighbors with neighbors = ' + str(n))
     sns_knn.set(ylim=(-2, 3))

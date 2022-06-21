@@ -20,9 +20,8 @@ dir_path = "/Users/Imanol/OneDrive/Escritorio/Master/Q2/TOML/TOML-Projects/Proje
 Dataframe = pd.read_csv(dir_path + "norm_all_data.csv")
 Dataframe["date"] = pd.to_datetime(Dataframe["date"])
 
-X = Dataframe.drop(["RefSt", "date"], axis = 1)
+X = Dataframe.drop(["RefSt", "date", "Sensor_NO2", "Sensor_NO", "Sensor_SO2"], axis = 1)
 Y = Dataframe["RefSt"]
-
 
 xTrain, xTest, yTrain, yTest = train_test_split(X, Y, test_size = 0.3)
 
