@@ -45,6 +45,8 @@ for n in features:
     sfs_r2 = sfs_r2.fit(xTrain,yTrain)
     features_r2 = list(sfs_r2.k_feature_names_)
 
+    print(features_r2)
+
     xTrain_n = xTrain[features_r2]
     xTest_n = xTest[features_r2]
 
@@ -69,7 +71,7 @@ for n in features:
 table_creation(['Number of features', 'R²', 'RMSE', 'MAE'], [features, R2_lr, RMSE_lr, MAE_lr], 'P1_lr_table.txt')
 
 
-plt.title("Forward Subset Selection Linear Regression. Metrics vs  number of features")
+plt.title("Subset Selection Linear Regression. Metrics vs  number of features")
 plt.xlabel('Number of features')
 plt.ylabel('Metric value')
 plt.plot(features, R2_lr, color='red', label = "R²")
