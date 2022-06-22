@@ -77,13 +77,3 @@ plt.plot(estimators_rf, RMSE_rf, color='blue', label = "RMSE")
 plt.plot(estimators_rf, MAE_rf, color='green', label = "MAE")
 plt.legend(loc = "center left")
 plt.show()
-
-
-
-
-
-'''classifing the features according to their importance
-feature_imp = pd.Series(classifier.feature_importances_,index=[i for i in range(21)]).sort_values(ascending=False)
-
-# printing
-print(feature_imp)'''
