@@ -86,7 +86,7 @@ plt.show()'''
 
 krr = KernelRidge(kernel='rbf')
 
-alpha_krr = np.linspace(1, 50, num = 10, dtype = float)
+alpha_krr = np.linspace(0.1, 10, num = 10, dtype = float)
 coefficients_krr = []
 
 R2_krr = []

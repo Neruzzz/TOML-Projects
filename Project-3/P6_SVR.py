@@ -32,7 +32,7 @@ Predictions['date'] = Dataframe['date']
 
 svr = SVR()
 
-C = np.linspace(100 , 1, num = 10, dtype = int)
+C = np.linspace(500 , 1, num = 10, dtype = int)
 coefficients_svr = []
 
 R2_svr = []
@@ -41,7 +41,7 @@ MAE_svr = []
 
 print()
 for c in C:
-    svr.set_params(C = c)
+    svr.set_params(C = c, gamma = 'auto')
     svr.fit(xTrain, yTrain)
     prediction_svr = svr.predict(xTest)
 
@@ -66,8 +66,7 @@ for c in C:
     plt.show()'''
 
 
-table_creation(['Number of trees', 'R²', 'RMSE', 'MAE'], [C, R2_svr, RMSE_svr, MAE_svr], 'P6_svr_table.txt')
-
+table_creation(['C', 'R²', 'RMSE', 'MAE'], [C, R2_svr, RMSE_svr, MAE_svr], 'P6_svr_table.txt')
 
 plt.title("SVR. Metrics vs  C (regularization)")
 plt.xlabel('C')
