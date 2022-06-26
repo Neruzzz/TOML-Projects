@@ -84,7 +84,7 @@ def plot_grid(ww1,ww2,ww3, xtest, ytest):
 #####################################################
 # T is batch size;
 # H is hidden dimension
-T, H = 640, 20
+T, H = 640, 90
 
 D_in=3  # Input dimension (includes BIAS!)
 D_out=1 #output dimension, class (1,0) or (0,1)
@@ -146,7 +146,6 @@ plt.plot(x[id_0,0],x[id_0,1],"d",c="red")
 plt.plot(x[id_1,0],x[id_1,1],"d",c="blue")
 
 plt.show()
-
 
 
 # Randomly initialize weights
@@ -232,6 +231,10 @@ plt.ylabel("Log(loss)")
 plt.plot(np.log(tot_loss_array[:,0]), c="red")
 plt.plot(np.log(tot_loss_array[:,1]), c="blue")
 plt.show()
+
+print()
+print(tot_loss_array[-1,0])
+print(tot_loss_array[-1,1])
 
 
 
